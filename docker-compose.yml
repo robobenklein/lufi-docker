@@ -1,7 +1,8 @@
 version: '3'
 
 volumes:
-  lufi_data: {}
+  lufi_data:
+  lufi_db:
 
 services:
 
@@ -15,7 +16,7 @@ services:
     volumes:
       - lufi_data:/var/lufi
       - ./lufi.passwd:/etc/lufi/lufi.passwd:ro
-      - ./lufi.conf:/etc/lufi/lufi.conf:ro
+      - ./lufi.conf:/opt/lufi/lufi.conf:ro
     restart: unless-stopped
     depends_on:
       - sql
@@ -27,5 +28,5 @@ services:
       POSTGRES_USER: lufi
       POSTGRES_PASSWORD:
     volumes:
-      - "${MOUNT_SQL}:/var/lib/postgresql/data"
+      - "lufi_db:/var/lib/postgresql/data"
 

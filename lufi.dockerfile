@@ -8,13 +8,13 @@ RUN cpan Carton
 RUN mkdir -p /etc/lufi
 RUN mkdir -p /var/lufi
 
-WORKDIR /opt/
-RUN git clone https://framagit.org/fiat-tux/hat-softwares/lufi.git lufi
+COPY ./lufi /opt/lufi
+
 WORKDIR /opt/lufi
+RUN carton install --deployment --without=test --without=swift-storage --without=sqlite --without=mysql
 
-RUN carton install --deployment --without=test --without=swift-storage --without=sqlite
-
-COPY 
+RUN mkdir -p /etc/service/lufi
+COPY runit-lufi.sh /etc/service/lufi/run
 
 CMD ["/sbin/my_init"]
 
