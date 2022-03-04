@@ -1,0 +1,39 @@
+version: '3'
+
+volumes:
+  lufi_data:
+  lufi_db:
+
+networks:
+  lufi:
+
+services:
+
+  lufi:
+    build:
+      context: .
+      dockerfile: lufi.dockerfile
+    image: lufi
+    ports:
+      - 127.0.0.1:8181:8081
+    networks:
+      - lufi
+    volumes:
+      - lufi_data:/var/lufi
+      - ./lufi.passwd:/etc/lufi/lufi.passwd:ro
+      - ./lufi.conf:/opt/lufi/lufi.conf:ro
+    restart: unless-stopped
+    depends_on:
+      - sql
+
+  sql:
+    image: postgres:11-alpine
+    restart: always
+    networks:
+      - lufi
+    environment:
+      POSTGRES_USER: lufi
+      POSTGRES_PASSWORD: changemeeee2HBisZ4TYwpGiqvai8wZRCqZU
+    volumes:
+      - "lufi_db:/var/lib/postgresql/data"
+
