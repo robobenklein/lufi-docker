@@ -11,7 +11,7 @@ RUN mkdir -p /var/lufi
 COPY ./lufi /opt/lufi
 
 WORKDIR /opt/lufi
-RUN carton install --deployment --without=test --without=swift-storage --without=sqlite --without=mysql --without=ldap
+RUN carton install --deployment --without=test --without=swift-storage --without=sqlite --without=mysql
 
 RUN mkdir -p /etc/service/lufi
 COPY runit-lufi.sh /etc/service/lufi/run
